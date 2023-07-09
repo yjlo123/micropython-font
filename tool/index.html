@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pixel Font</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+  </head>
+  <body>
+
+    <div id="matrix">
+    </div>
+
+    <div style="display: block;">
+      <a id="btn-refresh" href="#" class="btn">Refresh</a>
+    </div>
+
+
+    <div id="data">
+      1232
+    </div>
+
+    <script>
+      let matrix = $("#matrix");
+      let width = 14;
+      let height = 26;
+      let data = Array(height).fill(0);
+
+      for (let i = 0; i < height; i++) {
+        let row = $('<div class="row">');
+        for (let j = 0; j < width; j++) {
+          let cell = $('<div class="cell"></div>');
+          cell.on("mousedown", function(e) {
+            e.preventDefault();
+             if(e.which==1) {
+               $(this).addClass("black");
+               // row: i, col: j
+               let mask = 1 << (16 - j - 1);
+               data[i] |= mask;
+             } else if (e.which == 3) {
+                $(this).removeClass("black");
+                let mask = 1 << (16 - j - 1);
+                data[i] &= (~mask);
+             }
+          })
+          cell.on("mousemove", function(e) {
+            if(e.which==1) {
+               $(this).addClass("black");
+               let mask = 1 << (16 - j - 1);
+               data[i] |= mask;
+             } else if (e.which == 3) {
+                $(this).removeClass("black");
+                let mask = 1 << (16 - j - 1);
+                data[i] &= (~mask);
+             }
+          });
+          cell.bind("contextmenu", function(e) {
+              return false;
+          });
+          row.append(cell);
+        }
+        row.append($("<div>" + (i+1) + "</div>"))
+        matrix.append(row);
+      }
+      let horizon_ruler = $('<div class="ruler">');
+      for (let j = 0; j < width; j++) { 
+        horizon_ruler.append($('<div class="ruler-cell">'+(j+1)+'</div>'));
+      }
+      matrix.append(horizon_ruler);
+
+
+      $('#btn-refresh').on("click", function(){
+        let hexList = [];
+        for (num of data) {
+          hexList.push("0x" + num.toString(16));
+        }
+       $('#data').text(hexList);
+      });
+    </script>
+
+    <style>
+      .cell {
+        border: 1px solid gray;
+        width: 20px;
+        height: 20px;
+        float: left;
+      }
+      .ruler-cell {
+        border: 1px solid white;
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        float: left;
+      }
+      .row {
+        display: block;
+        overflow: hidden;
+      }
+      .ruler {
+        overflow: hidden;
+      }
+      .black {
+        background-color: black;
+      }
+      .btn {
+        padding: 5px;
+        border: 1px solid gray;
+        cursor: pointer;
+        margin: 5px 3px;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background-color: #bbb;
+      }
+    </style>
+	<!-- <script src="index.js"></script> -->
+  </body>
+</html>
