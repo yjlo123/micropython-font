@@ -100,15 +100,15 @@ font = {
 }
 
 def draw_char(lcd, c, top, left):
-    letter_width = 14
+    code_width = 16
     if c not in font:
         c = 'invalid'
     arr = font[c]
     for row in range(26):
         code = arr[row]
-        for col in range(letter_width, -1, -1):
+        for col in range(code_width, -1, -1):
             if code & (1 << col):
-                lcd.pixel(left + (letter_width-col), top+row, lcd.white)
+                lcd.pixel(left + (code_width-col), top+row, lcd.white)
                 
 def draw_word(lcd, word, top, left):
     letter_width = 14
