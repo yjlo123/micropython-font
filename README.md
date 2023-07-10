@@ -1,5 +1,5 @@
 # micropython-font
-Pixel fonts for LCD in micropython
+Pixel fonts for tiny displays in micropython
 
 ## Hardware
 Waveshare Pico LCD 1.14 inch HAT for Raspberry Pi Pico  
