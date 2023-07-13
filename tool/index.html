@@ -11,16 +11,17 @@
   </head>
   <body>
 
-    <div id="matrix">
+    <div id="matrix" class="grid">
     </div>
 
     <div style="display: block;">
-      <a id="btn-refresh" href="#" class="btn">Refresh</a>
+      <a id="btn-clear" href="#" class="btn btn-danger">Clear</a>
+      <a id="btn-generate" href="#" class="btn btn-primary">Generate and Copy to Clipboard</a>
     </div>
 
 
-    <div id="data">
-      1232
+    <div id="data" class="result">
+      (Result here)
     </div>
 
     <script>
@@ -72,27 +73,33 @@
       matrix.append(horizon_ruler);
 
 
-      $('#btn-refresh').on("click", function(){
+      $('#btn-generate').on("click", function(){
         let hexList = [];
         for (num of data) {
           hexList.push("0x" + num.toString(16));
         }
-       $('#data').text(hexList);
+        $('#data').text(hexList);
+        navigator.clipboard.writeText(hexList);
       });
     </script>
 
     <style>
+      .grid {
+        border-left: 1px solid gray;
+        border-top: 1px solid gray;
+      }
       .cell {
-        border: 1px solid gray;
-        width: 20px;
-        height: 20px;
+        border-right: 1px solid gray;
+        border-bottom: 1px solid gray;
+        width: 24px;
+        height: 24px;
         float: left;
       }
       .ruler-cell {
         border: 1px solid white;
         text-align: center;
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         float: left;
       }
       .row {
@@ -106,14 +113,28 @@
         background-color: black;
       }
       .btn {
+        display: inline-block;
         padding: 5px;
         border: 1px solid gray;
         cursor: pointer;
         margin: 5px 3px;
         text-decoration: none;
+        color: black;
+        border-radius: 3px;
+      }
+      .btn-primary {
+        background-color: rgb(167, 205, 255);
+      }
+      .btn-danger {
+        background-color: rgb(255, 167, 167);
       }
       .btn:hover {
         background-color: #bbb;
+      }
+      .result {
+        border: 1px solid gray;
+        width: 100%;
+        overflow-wrap: break-word;
       }
     </style>
 	<!-- <script src="index.js"></script> -->
