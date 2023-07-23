@@ -12,3 +12,6 @@ Resolution: 240 * 135
 
 ### Ubuntu Mono 12x21
 ![demo1](/demo/ubuntu_mono.jpg)
+
+## Chinese 16x16
+![demo1](/demo/chinese_date.jpg)
